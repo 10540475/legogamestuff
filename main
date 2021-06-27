@@ -36,9 +36,9 @@ spawn(function()
 			for i= 1, 10, 1 do
 				if w.flags.toggle2 == true then
 					game.ReplicatedStorage.RemoteEvents.BuyItemRemote:FireServer("Random Armor")
-					wait(0.234)
 					for i, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
 						if v.name == "Bag" then
+							v.BagPart.Overhead:WaitForChild("Rarity", 2)
 							if v.BagPart.Overhead.Rarity and v.BagPart.Overhead.Rarity.Text == "Legendary" then
 								w.flags.toggle2 = false
 							end
@@ -72,4 +72,3 @@ local box = w:Box('JumpPower', {
 		game.Players.LocalPlayer.Character.Humanoid.JumpPower = tonumber(new)
 	end
 end)
-
