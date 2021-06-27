@@ -2,7 +2,7 @@ local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Kiwi-
 local w = library:CreateWindow('Project XL')
 
 
-w:Section('Arroww Farm')
+w:Section('Arrow Farm')
 
 
 local t = w:Toggle('Farming arrows', {flag = "toggle1"})
