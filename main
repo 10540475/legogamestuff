@@ -60,7 +60,7 @@ spawn(function()
 					game.ReplicatedStorage.RemoteEvents.BuyItemRemote:FireServer("Random Armor")
 					for i, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
 						if v.name == "Bag" then
-							if v.BagPart.Overhead.Rarity.Text == "Legendary" then
+							if v.BagPart.Overhead.Rarity and v.BagPart.Overhead.Rarity.Text == "Legendary" then
 								w.flags.toggle2 = false
 							end
 						end
