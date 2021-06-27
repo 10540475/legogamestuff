@@ -1,3 +1,4 @@
+print("Here!")
 while  wait(0.1) do
 	if _G.ArrowFarmOn == true then
 		for i= 1, 20, 1 do
