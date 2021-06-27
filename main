@@ -56,6 +56,21 @@ end)
 
 w:Section('Misc')
 
+local b = w:Button("Hide name", function()
+	local lp = game:GetService('Players').LocalPlayer
+	if lp.Character.Head:FindFirstChildOfClass("BillboardGui") then
+		lp.Character.Head:FindFirstChildOfClass("BillboardGui"):Destroy()
+		lp.Character["Body Colors"]:Destroy()
+		lp.Character.Shirt:Destroy()
+		lp.Character.Pants:Destroy()
+		for i, c in pairs(lp.Character:GetDescendants()) do
+			if c:IsA("Accessory") or c:IsA("Decal") or c:IsA("SpecialMesh") or c:IsA("Model") then
+				c:Destroy()
+			end
+		end
+	end
+end)
+
 local box = w:Box('WalkSpeed', {
 	flag = "ws";
 	type = 'number';
@@ -68,7 +83,6 @@ local box = w:Box('JumpPower', {
 	flag = "jp";
 	type = 'number';
 }, function(new, old, enter)
-	print(new, old, enter)
 	while wait() do
 		game.Players.LocalPlayer.Character.Humanoid.JumpPower = tonumber(new)
 	end
