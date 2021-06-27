@@ -1,17 +1,96 @@
-print("Here!")
-while  wait(0.1) do
-	if _G.ArrowFarmOn == true then
-		for i= 1, 20, 1 do
-			wait(0.1)
-			game.ReplicatedStorage.RemoteEvents.BuyItemRemote:FireServer("Arrow")
-			for i, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-				if v.name == "Lucky Arrow" or v.name == "Requiem Arrow" then
-					_G.ArrowFarmOn = false
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Kiwi-i/wallys-ui-fork/master/lib.lua", true))()
+local w = library:CreateWindow('Projecy XL')
+
+
+w:Section('Arrow Farm')
+
+
+local t = w:Toggle('Farming arrows', {flag = "toggle1"})
+
+spawn(function()
+	while  wait(0.1) do
+		if w.flags.toggle1 == true then
+			for i= 1, 20, 1 do
+				wait(0.1)
+				game.ReplicatedStorage.RemoteEvents.BuyItemRemote:FireServer("Arrow")
+				for i, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.name == "Lucky Arrow" or v.name == "Requiem Arrow" then
+						w.flags.toggle1 = false
+					end
+				end
+				if i == 20 and w.flags.toggle1 == true then
+					game.ReplicatedStorage.RemoteEvents.ClearInventoryRemote:FireServer()
 				end
 			end
-			if i == 20 and _G.ArrowFarmOn == true then
-				game.ReplicatedStorage.RemoteEvents.ClearInventoryRemote:FireServer()
+		end
+	end
+end)
+
+
+a = function()
+	print(w.flags.toggle1)
+	while w.flags.toggle1 == true do
+		for i= 1, 20, 1 do
+			if w.flags.toggle1 == true then
+				wait(0.1)
+				game.ReplicatedStorage.RemoteEvents.BuyItemRemote:FireServer("Arrow")
+				for i, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+					if v.name == "Lucky Arrow" or v.name == "Requiem Arrow" then
+						w.flags.toggle1 = false
+					end
+				end
+				if i == 20 and w.flags.toggle1 == true then
+					game.ReplicatedStorage.RemoteEvents.ClearInventoryRemote:FireServer()
+				end
 			end
 		end
 	end
 end
+
+w:Section('Armor Farm')
+
+local t = w:Toggle('Farming armor', {flag = "toggle2"})
+
+spawn(function()
+	while  wait(0.1) do
+		if w.flags.toggle2 == true then
+			for i= 1, 10, 1 do
+				if w.flags.toggle2 == true then
+					wait(0.1)
+					game.ReplicatedStorage.RemoteEvents.BuyItemRemote:FireServer("Random Armor")
+					for i, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+						if v.name == "Bag" then
+							if v.BagPart.Overhead.Rarity.Text == "Legendary" then
+								w.flags.toggle2 = false
+							end
+						end
+					end
+					if i == 10 and w.flags.toggle2 == true then
+						game.ReplicatedStorage.RemoteEvents.ClearInventoryRemote:FireServer()
+					end	
+				end
+			end
+		end
+	end
+end)
+
+w:Section('Misc')
+
+local box = w:Box('WalkSpeed', {
+	flag = "ws";
+	type = 'number';
+}, function(new, old, enter)
+	print(new, old, enter)
+	game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = tonumber(new)
+end)
+
+local box = w:Box('JumpPower', {
+	flag = "jp";
+	type = 'number';
+}, function(new, old, enter)
+	print(new, old, enter)
+	while wait() do
+		game.Players.LocalPlayer.Character.Humanoid.JumpPower = tonumber(new)
+	end
+end)
+
