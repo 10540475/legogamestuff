@@ -1,0 +1,329 @@
+local library = loadstring(game:HttpGet(('https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/wall%20v3')))()
+local w = library:CreateWindow("Vak City Bitch") -- Creates the window
+local a = w:CreateFolder("Farms") -- Creates the folder(U will put here your buttons,etc)
+local inputManager = game:GetService("VirtualUser")
+local TeleportService = game:GetService("TeleportService")
+
+local highlights = {}
+
+--local function whale()
+--	if game.Workspace.Whales:FindFirstChild("Whale") then
+--		game.Workspace.Whales.Whale:MoveTo(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.LookVector * 140 + game.Players.LocalPlayer.Character.HumanoidRootPart.Position)
+--	end
+--end
+
+local function garbEsp()
+	while wait(1) and shared.garbesp == true do
+		for i,v in pairs(workspace:GetChildren()) do
+			if v.Name == "BIN" then 
+				for i2, v2 in pairs(v:GetChildren()) do
+					if v2.Size == Vector3.new(10, 4, 7) and not v2:FindFirstChild("Highlight") then 
+						local hLight= Instance.new("Highlight")
+						hLight.Parent = v2
+						table.insert(highlights, hLight)
+					end
+				end 
+			end
+		end
+	end
+end
+
+
+
+local function mineEsp()
+	while wait(1) and shared.mineesp == true do
+		for i,v in pairs(game:GetService("Workspace").MachineWorkspace.PrisonStuff.RockSpawn:GetChildren()) do
+			if not v:FindFirstChild("Highlight") then 
+				local hLight= Instance.new("Highlight")
+				hLight.Parent = v
+				table.insert(highlights, hLight)
+			end
+		end
+	end
+end
+
+local function whaleEsp()
+	while wait(1) and shared.whalesp == true do
+		for i,v in pairs(workspace.Whales:GetChildren()) do
+			if v.Name == "Whale" and not v:FindFirstChild("Highlight") then 
+				local hLight= Instance.new("Highlight")
+				hLight.Parent = v
+				table.insert(highlights, hLight)
+			end
+		end
+	end
+end
+
+local function removeHighLights()
+	for i,v in pairs(highlights) do
+		v:Destroy()
+	end
+end
+
+local ship = game:GetService("Workspace"):FindFirstChild("SEA Whaling Ship")
+
+
+
+a:Toggle("Whale",function(bool)
+	shared.whale = bool
+	--print(shared.whale)
+	if shared.whale == true then
+		ship.Parent = game.Lighting
+		game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
+		
+		--spawn(attack())
+	else
+		ship.Parent = workspace
+		game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+	end
+
+end)
+
+--Original whale
+
+--a:Toggle("Whale",function(bool)
+--	shared.whale = bool
+--	if shared.whale == true then
+--		game["Run Service"]:BindToRenderStep("Whale",1,whale)
+--		if game.Whales.Whale then
+--			for i, v in pairs(game.Whales.Whale:GetDescendants()) do
+--				if v.CanCollide then
+--					v.CanCollide = false
+--				end
+--				if v:IsA("Sound") then
+--					v:Destroy()
+--				end
+--			end
+--		end
+--	else
+--		game["Run Service"]:UnbindFromRenderStep("Whale") --BindToRenderStep("Whale",1,whale)
+--	end
+
+--end)
+
+a:Toggle("Spam join whaler team",function(bool)
+
+	shared.whaleTeam = bool
+	if shared.whaleTeam == true then
+		while shared.whaleTeam == true do
+			wait()
+			local ohString1 = "Accept job"
+			local ohString2 = "Whaler"
+			game:GetService("ReplicatedStorage").Events.JobEvent:FireServer(ohString1, ohString2)
+		end
+	end
+end)
+
+local b = w:CreateFolder("Esp") -- Creates the folder(U will put here your buttons,etc)
+
+b:Label("Only do one at a time",{
+	TextSize = 15; -- Self Explaining
+	TextColor = Color3.fromRGB(255,255,255); -- Self Explaining
+	BgColor = Color3.fromRGB(69,69,69); -- Self Explaining
+
+}) 
+
+--b:Toggle("Whale",function(bool)
+--	shared.whalesp = bool
+--	if shared.whalesp == true then
+--		game["Run Service"]:BindToRenderStep("whaleEsp",1,whaleEsp)
+--	else
+--		game["Run Service"]:UnbindFromRenderStep("whaleEsp")
+--		removeHighLights()
+--	end
+
+--end)
+
+b:Toggle("Mine",function(bool)
+
+	shared.mineesp = bool
+	if shared.mineesp == true then
+		game["Run Service"]:BindToRenderStep("mineEsp",1,mineEsp)
+	else
+		game["Run Service"]:UnbindFromRenderStep("mineEsp")
+		removeHighLights()
+	end
+
+end)
+
+--Test position Vector3.new(3736.59, -233.788, 13322)
+
+local function targetAcquired()
+	--print("Working!")
+	workspace.CurrentCamera.CFrame = CFrame.new(workspace.CurrentCamera.CFrame.Position,game.Workspace.Whales:FindFirstChild("Whale").Union.Position)
+end
+
+
+local bindbool = false
+
+b:Bind("Lock on whale",Enum.KeyCode.F1 ,function()--Default bind
+	if bindbool == true then
+		--print(bindbool)
+		game:GetService("RunService"):UnbindFromRenderStep("targetWhale")
+		bindbool = false
+	else	
+		if bindbool == false then
+			--print(bindbool)
+			game:GetService("RunService"):BindToRenderStep("targetWhale",1,targetAcquired)
+			bindbool = true
+		end
+	end
+end)
+
+local function attack()
+	while wait() do 
+		if bindbool == true and game.Workspace.Whales:FindFirstChild("Whale") then
+			--print("Blah blah blah")
+			mouse1click()
+			wait(0.25)
+			--game:GetService("ReplicatedStorage").Events.ReplicateAmmo:FireServer()
+			keypress(0x52)
+			wait(4.5)
+			keyrelease(0x52)
+			wait(0.25)
+
+		end
+	end
+end
+
+spawn(attack)
+
+--_G.yes = true
+
+--while _G.yes do
+--	wait()
+--	workspace.CurrentCamera.CFrame = CFrame.new(workspace.CurrentCamera.CFrame.Position,game.Workspace.Whales.Whale.Union.Position)
+--end
+
+b:Toggle("Garbage",function(bool)
+	shared.garbesp = bool
+	--print(bool)
+	if shared.garbesp == true then
+		game["Run Service"]:BindToRenderStep("GarbEsp",1,garbEsp)
+	else
+		game["Run Service"]:UnbindFromRenderStep("GarbEsp")
+		removeHighLights()
+	end
+end)
+
+local b = w:CreateFolder("Maps") -- Creates the folder(U will put here your buttons,etc)
+local placeIDs = game:GetService("ReplicatedStorage").PlaceIDs
+
+b:Button("Menu", function()
+	TeleportService:Teleport(2043040358)
+end)
+
+b:Label("Use from main menu",{
+	TextSize = 15; -- Self Explaining
+	TextColor = Color3.fromRGB(255,255,255); -- Self Explaining
+	BgColor = Color3.fromRGB(69,69,69); -- Self Explaining
+
+}) 
+
+for i,v in pairs(placeIDs:GetChildren()) do
+	if v:IsA("IntValue") then
+		b:Button(v.Name, function()
+			TeleportService:Teleport(v.Value)
+		end)
+	end
+end
+
+
+local c = w:CreateFolder("Teams") -- Creates the folder(U will put here your buttons,etc)
+
+local jobPath = game:GetService("Workspace").Ign.Jobs
+
+for i,v in pairs(jobPath:GetChildren()) do
+	c:Button(v.Name, function()
+		local ohString1 = "Accept job"
+		local ohString2 = tostring(v.Name)
+		game:GetService("ReplicatedStorage").Events.JobEvent:FireServer(ohString1, ohString2)
+	end)
+end
+
+
+--/Butcher coords
+--local Meat = Vector3.new(-266.5, -104, -1958) -- Whale Meat
+--local Cut = Vector3.new(-191, -117, -1929) -- Cut
+--local Package = Vector3.new(-196, -117, -1965) -- Package
+
+--local pathfindingService = game:GetService("PathfindingService")
+
+--local path = pathfindingService:CreatePath({
+--	AgentRadius = 3,
+--	AgentHeight = 6,
+--	AgentCanJump = true,
+--})
+
+--path:ComputeAsync(game.Players.LocalPlayer.Character.HumanoidRootPart.Position, Meat)
+
+--local waypoints = path:GetWaypoints()
+
+--for i,v in pairs(waypoints) do
+--	game.Players.LocalPlayer.Character.Humanoid:MoveTo(v.Position)
+--	game.Players.LocalPlayer.Character.Humanoid.MoveToFinished:Wait()
+--	if i == #waypoints then
+
+--	end
+--end
+
+--Timings
+--Meat - 7
+--Cut - 14
+--Pack - 7
+
+--local function recursiveMove(vec,vec2,vec3)
+--	path:ComputeAsync(game.Players.LocalPlayer.Character.HumanoidRootPart.Position, vec)
+--	local waypoints = path:GetWaypoints()
+--	for i,v in pairs(waypoints) do
+--		game.Players.LocalPlayer.Character.Humanoid:MoveTo(v.Position)
+--		game.Players.LocalPlayer.Character.Humanoid.MoveToFinished:Wait()
+--		if i == #waypoints then
+--			if vec2 then
+--				path:ComputeAsync(game.Players.LocalPlayer.Character.HumanoidRootPart.Position, vec2)
+--				local waypoints = path:GetWaypoints()
+--				for i,v in pairs(waypoints) do
+--					game.Players.LocalPlayer.Character.Humanoid:MoveTo(v.Position)
+--					game.Players.LocalPlayer.Character.Humanoid.MoveToFinished:Wait()
+--					if i == #waypoints then
+--						if vec3 then
+--							path:ComputeAsync(game.Players.LocalPlayer.Character.HumanoidRootPart.Position, vec3)
+--							local waypoints = path:GetWaypoints()
+--							for i,v in pairs(waypoints) do
+--								game.Players.LocalPlayer.Character.Humanoid:MoveTo(v.Position)
+--								game.Players.LocalPlayer.Character.Humanoid.MoveToFinished:Wait()
+--								if i == #waypoints then
+--									if vec2 then
+
+--									end
+--								end
+--							end
+--						end
+--					end
+--				end
+--			end
+--		end
+--	end
+--end
+
+--keypress(0x45)
+--wait(3)
+--keyrelease(0x45)
+
+--local function findClosestMess()
+--	local closest = nil
+--	local closestmag = math.huge
+--	for i,v in pairs(game:GetService("Workspace")["Street Messes"]:GetChildren()) do --Magnitude func
+--		if v:FindFirstChildWhichIsA("Decal") and v:FindFirstChildWhichIsA("Decal").Transparency ~= 1 then
+--			local mag = (v.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+--			if mag <= closestmag then
+--				closestmag = mag
+--				closest = v
+--				--print(v.Name .. " is " .. mag .. " away.")
+--			end
+--		end
+--	end
+--	return closest, closestmag
+--end
+
+--print(findClosestMess())
