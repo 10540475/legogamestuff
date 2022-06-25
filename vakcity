@@ -4,8 +4,8 @@ local a = w:CreateFolder("Farms") -- Creates the folder(U will put here your but
 local inputManager = game:GetService("VirtualUser")
 local TeleportService = game:GetService("TeleportService")
 
---syn.queue_on_teleport("https://raw.githubusercontent.com/10540475/legogamestuff/main/vakcity")
-)
+syn.queue_on_teleport("loadstring(game:HttpGet("https://raw.githubusercontent.com/10540475/legogamestuff/main/vakcity"))()")
+
 
 local highlights = {}
 
